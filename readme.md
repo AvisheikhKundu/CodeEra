@@ -1,4 +1,4 @@
-# CodeEra is  an Bangladeshi E-Learning Platform.
+# CodeEra is a Bangladeshi E-Learning Platform.
 
 
 
