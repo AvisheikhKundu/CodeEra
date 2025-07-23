@@ -44,18 +44,19 @@ Before you begin, ensure you have the following prerequisites:
 - Bootstrap 5
 - JavaScript
 
-✅ Stack Used
-Backend: Node.js + Express
+## Stack Used
 
-Database: MongoDB
+- Backend: Node.js + Express
 
-ORM: Mongoose
+- Database: MongoDB
 
-Password Security: bcrypt
+- ORM: Mongoose
 
-API Format: RESTful
+- Password Security: bcrypt
 
-Test Tool: Postman (or connect with your frontend later)
+- API Format: RESTful
+
+- Test Tool: Postman (or connect with your frontend later)
 
 
 
