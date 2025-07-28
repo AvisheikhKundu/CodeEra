@@ -1,7 +1,8 @@
 # CodeEra is a Bangladeshi E-Learning Platform
 
 
-![E-Learning Platform](Home.png)
+<img width="1918" height="1031" alt="Home" src="https://github.com/user-attachments/assets/b7dd9134-3398-44cf-b45e-c09cd40a6588" />
+
 
 The project involves the creation of an e-learning website using HTML, CSS, Bootstrap 5, and JavaScript. The website aims to provide a user-friendly and responsive platform for learners to access educational content. 
 
