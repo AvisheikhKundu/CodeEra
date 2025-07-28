@@ -7,7 +7,7 @@ The project involves the creation of an e-learning website using HTML, CSS, Boot
 
 ## Introduction
 
-CodeEra is an e-learning website designed to provide a user-friendly and responsive platform for learners to access educational content. The project incorporates HTML, CSS, Bootstrap 5, and JavaScript to create an interactive and visually appealing learning experience.
+CodeEra is a modern e-learning web platform built to empower Computer Science & Engineering (CSE) students in Bangladesh with high-quality online education. Whether you're a university student, job seeker, or beginner wanting to learn programming and tech skills — CodeEra offers a structured, accessible, and locally relevant learning experience.
 
 ## Features
 
