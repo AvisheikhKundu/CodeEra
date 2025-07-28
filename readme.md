@@ -11,7 +11,7 @@ CodeEra is a modern e-learning web platform built to empower Computer Science & 
 
 ## Features
 
-- Responsive design using Bootstrap 5.
+- Responsive design.
 - Structured course catalog with detailed descriptions.
 - Interactive lessons.
 - User can register and login.
@@ -43,7 +43,9 @@ Before you begin, ensure you have the following prerequisites:
 - CSS
 - Bootstrap 5
 - JavaScript
-
+- Nodejs
+- Expressjs
+- MongoDB
 ## Stack Used
 
 - Backend: Node.js + Express
