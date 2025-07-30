@@ -7,7 +7,7 @@
 
 ## Introduction
 
-CodeEra is a modern e-learning web platform built to empower Computer Science & Engineering (CSE) students in Bangladesh with high-quality online education. Whether you're a university student, job seeker, or beginner wanting to learn programming and tech skills — CodeEra offers a structured, accessible, and locally relevant learning experience.
+CodeEra is a modern e-learning web platform built to empower Computer Science & Engineering (CSE) students in Bangladesh with high-quality online education. Whether you're a university student, job seeker, or beginner wanting to learn programming and tech skills. CodeEra offers a structured, accessible, and locally relevant learning experience.
 
 ## Features
 
