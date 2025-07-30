@@ -72,10 +72,10 @@
                   <a href="#" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center p-0" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="height:40px;width:40px;">
                     <img src="img/profile-user.png" alt="Profile" style="width:26px;height:26px;border-radius:50%;object-fit:cover;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown" id="profileDropdownMenu">
-                    <li><a class="dropdown-item" href="login.html">Login</a></li>
-                    <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
-                  </ul>
+                  <div class="dropdown-menu fade-down m-0 dropdown-menu-end" aria-labelledby="profileDropdown" id="profileDropdownMenu">
+                    <a href="login.html" class="dropdown-item">Login</a>
+                    <a href="signup.html" class="dropdown-item">Sign Up</a>
+                  </div>
                 </div>
                 <a href="#" class="nav-item nav-link d-flex align-items-center justify-content-center p-0 ms-lg-2 ms-1" style="height:40px;width:40px;">
                   <div id="google_translate_element"></div>
@@ -442,18 +442,7 @@
 
 <script>
 // If you want to dynamically show login/signup or user info, you can use JS like below:
-document.addEventListener('DOMContentLoaded', function() {
-  // Simulate authentication check (replace with real logic)
-  var isAuthenticated = false; // Set to true if user is logged in
-  var dropdownMenu = document.getElementById('profileDropdownMenu');
-  if (!isAuthenticated && dropdownMenu) {
-    dropdownMenu.innerHTML = `
-      <li><a class="dropdown-item" href="login.html">Login</a></li>
-      <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
-    `;
-  }
-  // If authenticated, you can show user info/settings/logout here
-});
+
 </script>
 </body>
 
