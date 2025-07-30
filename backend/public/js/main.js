@@ -106,6 +106,74 @@
 
 })(jQuery);
 
+// Profile Dropdown Logic
+document.addEventListener('DOMContentLoaded', function () {
+  const profileDropdownMenu = document.getElementById('profileDropdownMenu');
+  const profileDropdownBtn = document.getElementById('profileDropdown');
+  if (!profileDropdownMenu || !profileDropdownBtn) return;
+
+  // Helper to render dropdown
+  function renderDropdown(user) {
+    if (!user) {
+      profileDropdownMenu.innerHTML = `
+        <a class="dropdown-item" href="login.html">Login</a>
+        <a class="dropdown-item" href="signup.html">Signup</a>
+      `;
+    } else {
+      profileDropdownMenu.innerHTML = `
+        <span class="dropdown-item-text d-block px-3 py-2"><strong>${user.name}</strong><br><small>${user.email}</small></span>
+        <hr class="dropdown-divider">
+        <a class="dropdown-item" href="profile.html">Profile</a>
+        <a class="dropdown-item" href="#" id="settingsLink">Settings</a>
+        <a class="dropdown-item" href="#" id="logoutLink">Logout</a>
+      `;
+    }
+    profileDropdownMenu.classList.add('show'); // Ensure dropdown is visible when toggled
+  }
+
+  // Check login state
+  let dropdownRendered = false;
+  function alwaysShowDropdown() {
+    if (!dropdownRendered) {
+      renderDropdown(null);
+      dropdownRendered = true;
+    }
+  }
+
+  fetch('/api/profile', { credentials: 'include' })
+    .then(res => res.ok ? res.json() : null)
+    .then(data => {
+      renderDropdown(data && data.user ? data.user : null);
+      dropdownRendered = true;
+      // Add logout/settings handlers if logged in
+      if (data && data.user) {
+        setTimeout(() => {
+          const logoutLink = document.getElementById('logoutLink');
+          if (logoutLink) {
+            logoutLink.addEventListener('click', function (e) {
+              e.preventDefault();
+              fetch('/api/logout', { method: 'POST', credentials: 'include' })
+                .then(() => window.location.reload());
+            });
+          }
+          const settingsLink = document.getElementById('settingsLink');
+          if (settingsLink) {
+            settingsLink.addEventListener('click', function (e) {
+              e.preventDefault();
+              window.location.href = 'profile.html#settings';
+            });
+          }
+        }, 100);
+      }
+    })
+    .catch(() => alwaysShowDropdown());
+
+  // Fallback: always show dropdown if fetch never returns
+  setTimeout(alwaysShowDropdown, 2000);
+
+  // No custom dropdown toggle: rely on Bootstrap's built-in dropdown
+});
+
 
 
 

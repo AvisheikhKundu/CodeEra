@@ -47,16 +47,16 @@
 
 
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <p class="m-0 fw-bold" style="font-size: 25px;"><img src="img/online-education.png" alt="" height="50px">Code<span style="color: #2c68bc;">Era</span></p> 
-        </a>                                   
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-            style="border: none;">
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top" style="border-bottom:1px solid #e5e5e5;padding-top:0.25rem;padding-bottom:0.25rem;">
+        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-3 gap-2">
+            <img src="img/online-education.png" alt="Logo" height="44" style="margin-right:8px;">
+            <span class="fw-bold" style="font-size: 25px;">Code<span style="color: #3789ed;">Era</span></span>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <div class="navbar-nav ms-auto d-flex align-items-center gap-2 pe-lg-3 pe-2">
                 <a href="index.html" class="nav-item nav-link active">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="courses.html" class="nav-item nav-link">Courses</a>
@@ -67,10 +67,18 @@
                         <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
-                <a href="login.html" class="nav-item nav-link"><i class="fa fa-user"></i></a>
-                <a href="#" class="nav-item nav-link">
-                    <div id="google_translate_element"></div>
+                <a href="contact.html" class="nav-item nav-link" style="font-size:16px;">Contact</a>
+                <!-- Profile Icon Dropdown -->
+                <div class="nav-item dropdown d-flex align-items-center ms-lg-3 ms-2">
+                  <a href="#" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center p-0" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="height:40px;width:40px;">
+                    <img src="img/profile-user.png" alt="Profile" style="width:26px;height:26px;border-radius:50%;object-fit:cover;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown" id="profileDropdownMenu">
+                    <!-- Dynamic content inserted by JS -->
+                  </ul>
+                </div>
+                <a href="#" class="nav-item nav-link d-flex align-items-center justify-content-center p-0 ms-lg-2 ms-1" style="height:40px;width:40px;">
+                  <div id="google_translate_element"></div>
                 </a>
             </div>
         </div>
@@ -103,7 +111,7 @@
           
             <div class="row g-4 wow fadeInUp" data-wow-delay="0.5s ">
                 <center>
-                    <form class="shadow p-4" style="max-width: 550px;">
+<form id="loginForm" class="shadow p-4" style="max-width: 550px;">
                         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                             <h1 class="mb-5 bg-white text-center px-3">Login</h1>
             
@@ -127,7 +135,9 @@
                             </div>
                             
                             <div class="col-12">
-                                <button class="btn text-light w-100 py-3" type="submit">Login</button>
+<button class="btn text-light w-100 py-3" type="submit">Login</button>
+<div id="loginError" class="text-danger mt-2"></div>
+<div id="loginSuccess" class="text-success mt-2"></div>
                             </div>
 
                             <div class="col-12 text-center">
@@ -212,6 +222,45 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script>
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const errorDiv = document.getElementById('loginError');
+        const successDiv = document.getElementById('loginSuccess');
+        errorDiv.textContent = '';
+        successDiv.textContent = '';
+        if (!email || !password) {
+            errorDiv.textContent = 'Please enter both email and password.';
+            return;
+        }
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                successDiv.textContent = 'Successfully logged in! Redirecting...';
+                setTimeout(() => {
+                    if (data.user.role === 'instructor') {
+                        window.location.href = '/instructor-dashboard.html';
+                    } else if (data.user.role === 'admin') {
+                        window.location.href = '/admin-dashboard.html';
+                    } else {
+                        window.location.href = '/profile.html';
+                    }
+                }, 1200);
+            } else {
+                errorDiv.textContent = data.message || 'Login failed.';
+            }
+        } catch (err) {
+            errorDiv.textContent = 'Server error.';
+        }
+    });
+    </script>
 </body>
 
 </html>

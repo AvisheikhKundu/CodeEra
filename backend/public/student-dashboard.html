@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Student Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="img/online-education.png" rel="icon">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <p class="m-0 fw-bold" style="font-size: 25px;"><img src="img/online-education.png" alt="" height="50px">Code<span style="color: #2c68bc;">Era</span></p>
+        </a>
+    </nav>
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Student Dashboard</h2>
+            <a href="profile.html" class="btn btn-outline-primary">Profile</a>
+        </div>
+        <div id="studentInfo"></div>
+        <hr>
+        <h4>Browse Courses</h4>
+        <ul id="allCoursesList" class="list-group"></ul>
+        <hr>
+        <h4>My Enrolled Courses</h4>
+        <ul id="myStudentCourses" class="list-group"></ul>
+    </div>
+    <script>
+    async function loadStudentInfo() {
+        const res = await fetch('/api/profile');
+        if (res.ok) {
+            const data = await res.json();
+            const user = data.user;
+            if (user.role !== 'student') {
+                document.body.innerHTML = '<div class="container py-5"><h3>Access Denied: Only students can view this page.</h3></div>';
+                return;
+            }
+            document.getElementById('studentInfo').innerHTML = `<p><strong>Name:</strong> ${user.name}</p><p><strong>Email:</strong> ${user.email}</p>`;
+        } else {
+            window.location.href = '/login.html';
+        }
+    }
+    async function loadAllCourses() {
+        const res = await fetch('/api/courses');
+        const list = document.getElementById('allCoursesList');
+        list.innerHTML = '';
+        if (res.ok) {
+            const data = await res.json();
+            if (data.courses.length === 0) {
+                list.innerHTML = '<li class="list-group-item">No courses available.</li>';
+            } else {
+                data.courses.forEach(course => {
+                    list.innerHTML += `<li class="list-group-item"><strong>${course.title}</strong> - ${course.instructor} <button class='btn btn-sm btn-success float-end' onclick='enrollCourse("${course._id}")'>Enroll</button></li>`;
+                });
+            }
+        } else {
+            list.innerHTML = '<li class="list-group-item">Unable to load courses.</li>';
+        }
+    }
+    async function enrollCourse(courseId) {
+        const res = await fetch(`/api/courses/${courseId}/enroll`, { method: 'POST' });
+        if (res.ok) {
+            alert('Enrolled successfully!');
+            loadMyStudentCourses();
+        } else {
+            alert('Enrollment failed.');
+        }
+    }
+    async function loadMyStudentCourses() {
+        const res = await fetch('/api/my-courses');
+        const list = document.getElementById('myStudentCourses');
+        list.innerHTML = '';
+        if (res.ok) {
+            const data = await res.json();
+            if (data.courses.length === 0) {
+                list.innerHTML = '<li class="list-group-item">No enrolled courses.</li>';
+            } else {
+                data.courses.forEach(course => {
+                    list.innerHTML += `<li class="list-group-item"><strong>${course.title}</strong> - ${course.instructor}</li>`;
+                });
+            }
+        } else {
+            list.innerHTML = '<li class="list-group-item">Unable to load courses.</li>';
+        }
+    }
+    loadStudentInfo();
+    loadAllCourses();
+    loadMyStudentCourses();
+    </script>
+</body>
+</html>

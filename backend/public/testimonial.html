@@ -47,17 +47,16 @@
 
 
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <p class="m-0 fw-bold" style="font-size: 25px;"><img src="img/icon.png" alt="" height="50px">Code<span
-                    style="color: #2a61eb;">Era</span></p>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top" style="border-bottom:1px solid #e5e5e5;padding-top:0.25rem;padding-bottom:0.25rem;">
+        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-3 gap-2">
+            <img src="img/online-education.png" alt="Logo" height="44" style="margin-right:8px;">
+            <span class="fw-bold" style="font-size: 25px;">Code<span style="color: #3789ed;">Era</span></span>
         </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-            style="border: none;">
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <div class="navbar-nav ms-auto d-flex align-items-center gap-2 pe-lg-3 pe-2">
                 <a href="index.html" class="nav-item nav-link active">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="courses.html" class="nav-item nav-link">Courses</a>
@@ -68,10 +67,18 @@
                         <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
-                <a href="login.html" class="nav-item nav-link"><i class="fa fa-user"></i></a>
-                <a href="#" class="nav-item nav-link">
-                    <div id="google_translate_element"></div>
+                <a href="contact.html" class="nav-item nav-link" style="font-size:16px;">Contact</a>
+                <!-- Profile Icon Dropdown -->
+                <div class="nav-item dropdown d-flex align-items-center ms-lg-3 ms-2">
+                  <a href="#" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center p-0" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="height:40px;width:40px;">
+                    <img src="img/profile-user.png" alt="Profile" style="width:26px;height:26px;border-radius:50%;object-fit:cover;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown" id="profileDropdownMenu">
+                    <!-- Dynamic content inserted by JS -->
+                  </ul>
+                </div>
+                <a href="#" class="nav-item nav-link d-flex align-items-center justify-content-center p-0 ms-lg-2 ms-1" style="height:40px;width:40px;">
+                  <div id="google_translate_element"></div>
                 </a>
             </div>
         </div>

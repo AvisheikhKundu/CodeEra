@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CodeEra : Profile</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="img/online-education.png" rel="icon">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top" style="border-bottom:1px solid #e5e5e5;padding-top:0.25rem;padding-bottom:0.25rem;">
+        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-3 gap-2">
+            <img src="img/online-education.png" alt="Logo" height="44" style="margin-right:8px;">
+            <span class="fw-bold" style="font-size: 25px;">Code<span style="color: #3789ed;">Era</span></span>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto d-flex align-items-center gap-2 pe-lg-3 pe-2">
+                <a href="index.html" class="nav-item nav-link active">Home</a>
+                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="courses.html" class="nav-item nav-link">Courses</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="team.html" class="dropdown-item">Our Team</a>
+                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                    </div>
+                </div>
+                <a href="contact.html" class="nav-item nav-link" style="font-size:16px;">Contact</a>
+                <!-- Profile Icon Dropdown -->
+                <div class="nav-item dropdown d-flex align-items-center ms-lg-3 ms-2">
+                  <a href="#" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center p-0" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="height:40px;width:40px;">
+                    <img src="img/profile-user.png" alt="Profile" style="width:26px;height:26px;border-radius:50%;object-fit:cover;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown" id="profileDropdownMenu">
+                    <!-- Dynamic content inserted by JS -->
+                  </ul>
+                </div>
+                <a href="#" class="nav-item nav-link d-flex align-items-center justify-content-center p-0 ms-lg-2 ms-1" style="height:40px;width:40px;">
+                  <div id="google_translate_element"></div>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Profile</h2>
+                        <div id="profileInfo">
+                            <p>Loading...</p>
+                        </div>
+                        <hr>
+                        <h4>Edit Profile</h4>
+                        <form id="editProfileForm">
+                            <div class="mb-3">
+                                <label for="editName" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="editName" name="name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="editBio" class="form-label">Bio</label>
+                                <textarea class="form-control" id="editBio" name="bio"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editAvatar" class="form-label">Avatar URL</label>
+                                <input type="text" class="form-control" id="editAvatar" name="avatar">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Profile</button>
+                            <div id="profileUpdateMsg" class="mt-2"></div>
+                        </form>
+                        <hr>
+                        <h4>My Courses</h4>
+                        <ul id="myCoursesList" class="list-group"></ul>
+                        <hr>
+                        <h4>Settings</h4>
+                        <form id="changePasswordForm">
+                            <div class="mb-3">
+                                <label for="currentPassword" class="form-label">Current Password</label>
+                                <input type="password" class="form-control" id="currentPassword" name="currentPassword">
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPassword" class="form-label">New Password</label>
+                                <input type="password" class="form-control" id="newPassword" name="newPassword">
+                            </div>
+                            <button type="submit" class="btn btn-warning">Change Password</button>
+                            <div id="passwordChangeMsg" class="mt-2"></div>
+                        </form>
+                        <div class="mt-3">
+                            <em>More settings coming soon...</em>
+                        </div>
+                        </div>
+                        <button id="logoutBtn" class="btn btn-danger mt-3">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    async function loadProfile() {
+        const res = await fetch('/api/profile');
+        if (res.ok) {
+            const data = await res.json();
+            const user = data.user;
+            let dashboardLink = '';
+            if (user.role === 'instructor') {
+                dashboardLink = '<a href="instructor-dashboard.html" class="btn btn-outline-primary btn-sm mb-2">Go to Instructor Dashboard</a>';
+            } else if (user.role === 'admin') {
+                dashboardLink = '<a href="admin-dashboard.html" class="btn btn-outline-primary btn-sm mb-2">Go to Admin Dashboard</a>';
+            } else {
+                dashboardLink = '<a href="student-dashboard.html" class="btn btn-outline-primary btn-sm mb-2">Go to Student Dashboard</a>';
+            }
+            document.getElementById('profileInfo').innerHTML = `
+                ${dashboardLink}
+                <img src="${user.avatar || 'img/online-education.png'}" alt="Avatar" class="rounded mb-2" style="width:80px;height:80px;object-fit:cover;">
+                <p><strong>Name:</strong> ${user.name}</p>
+                <p><strong>Email:</strong> ${user.email}</p>
+                <p><strong>Role:</strong> ${user.role}</p>
+                <p><strong>Bio:</strong> ${user.bio || ''}</p>
+            `;
+            document.getElementById('editName').value = user.name || '';
+            document.getElementById('editBio').value = user.bio || '';
+            document.getElementById('editAvatar').value = user.avatar || '';
+        } else {
+            document.getElementById('profileInfo').innerHTML = '<p>Not logged in. <a href="login.html">Login</a></p>';
+            document.getElementById('editProfileForm').style.display = 'none';
+        }
+    }
+
+    document.getElementById('editProfileForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const name = document.getElementById('editName').value;
+        const bio = document.getElementById('editBio').value;
+        const avatar = document.getElementById('editAvatar').value;
+        const msgDiv = document.getElementById('profileUpdateMsg');
+        msgDiv.textContent = '';
+        try {
+            const res = await fetch('/api/profile', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, bio, avatar })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                msgDiv.textContent = 'Profile updated!';
+                loadProfile();
+            } else {
+                msgDiv.textContent = data.message || 'Update failed.';
+            }
+        } catch (err) {
+            msgDiv.textContent = 'Server error.';
+        }
+    };
+
+    async function loadMyCourses() {
+        const res = await fetch('/api/my-courses');
+        const list = document.getElementById('myCoursesList');
+        list.innerHTML = '';
+        if (res.ok) {
+            const data = await res.json();
+            if (data.courses.length === 0) {
+                list.innerHTML = '<li class="list-group-item">No enrolled courses.</li>';
+            } else {
+                data.courses.forEach(course => {
+                    list.innerHTML += `<li class="list-group-item"><strong>${course.title}</strong> - ${course.instructor}</li>`;
+                });
+            }
+        } else {
+            list.innerHTML = '<li class="list-group-item">Unable to load courses.</li>';
+        }
+    }
+
+    document.getElementById('logoutBtn').onclick = async function() {
+        await fetch('/api/logout', { method: 'POST' });
+        window.location.href = '/login.html';
+    };
+
+    document.getElementById('changePasswordForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const currentPassword = document.getElementById('currentPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const msgDiv = document.getElementById('passwordChangeMsg');
+        msgDiv.textContent = '';
+        if (!currentPassword || !newPassword) {
+            msgDiv.textContent = 'Please fill both fields.';
+            return;
+        }
+        try {
+            const res = await fetch('/api/profile/password', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ currentPassword, newPassword })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                msgDiv.textContent = 'Password changed successfully!';
+                document.getElementById('changePasswordForm').reset();
+            } else {
+                msgDiv.textContent = data.message || 'Password change failed.';
+            }
+        } catch (err) {
+            msgDiv.textContent = 'Server error.';
+        }
+    };
+
+    loadProfile();
+    loadMyCourses();
+    </script>
+</body>
+</html>

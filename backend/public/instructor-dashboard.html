@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Instructor Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="img/online-education.png" rel="icon">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <p class="m-0 fw-bold" style="font-size: 25px;"><img src="img/online-education.png" alt="" height="50px">Code<span style="color: #2c68bc;">Era</span></p>
+        </a>
+    </nav>
+    <div class="container py-5">
+        <h2>Instructor Dashboard</h2>
+        <div id="instructorInfo"></div>
+        <hr>
+        <h4>Create New Course</h4>
+        <form id="createCourseForm">
+            <div class="mb-3">
+                <label for="courseTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" id="courseTitle" required>
+            </div>
+            <div class="mb-3">
+                <label for="courseDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="courseDescription"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="courseImage" class="form-label">Image URL</label>
+                <input type="text" class="form-control" id="courseImage">
+            </div>
+            <button type="submit" class="btn btn-primary">Create Course</button>
+            <div id="courseCreateMsg" class="mt-2"></div>
+        </form>
+        <hr>
+        <h4>My Courses</h4>
+        <ul id="myInstructorCourses" class="list-group"></ul>
+    </div>
+    <script>
+    async function loadInstructorInfo() {
+        const res = await fetch('/api/profile');
+        if (res.ok) {
+            const data = await res.json();
+            const user = data.user;
+            if (user.role !== 'instructor') {
+                document.body.innerHTML = '<div class="container py-5"><h3>Access Denied: Only instructors can view this page.</h3></div>';
+                return;
+            }
+            document.getElementById('instructorInfo').innerHTML = `<p><strong>Name:</strong> ${user.name}</p><p><strong>Email:</strong> ${user.email}</p>`;
+        } else {
+            window.location.href = '/login.html';
+        }
+    }
+    document.getElementById('createCourseForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const title = document.getElementById('courseTitle').value;
+        const description = document.getElementById('courseDescription').value;
+        const image = document.getElementById('courseImage').value;
+        const msgDiv = document.getElementById('courseCreateMsg');
+        msgDiv.textContent = '';
+        try {
+            const res = await fetch('/api/courses', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, description, instructor: 'self', image })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                msgDiv.textContent = 'Course created!';
+                loadInstructorCourses();
+            } else {
+                msgDiv.textContent = data.message || 'Creation failed.';
+            }
+        } catch (err) {
+            msgDiv.textContent = 'Server error.';
+        }
+    };
+    async function loadInstructorCourses() {
+        const res = await fetch('/api/courses');
+        const list = document.getElementById('myInstructorCourses');
+        list.innerHTML = '';
+        if (res.ok) {
+            const data = await res.json();
+            const courses = data.courses.filter(c => c.instructor === 'self');
+            if (courses.length === 0) {
+                list.innerHTML = '<li class="list-group-item">No courses created yet.</li>';
+            } else {
+                courses.forEach(course => {
+                    list.innerHTML += `<li class="list-group-item"><strong>${course.title}</strong> - ${course.description}</li>`;
+                });
+            }
+        } else {
+            list.innerHTML = '<li class="list-group-item">Unable to load courses.</li>';
+        }
+    }
+    loadInstructorInfo();
+    loadInstructorCourses();
+    </script>
+</body>
+</html>

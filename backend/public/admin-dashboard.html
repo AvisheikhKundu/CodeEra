@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Admin Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="img/online-education.png" rel="icon">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <p class="m-0 fw-bold" style="font-size: 25px;"><img src="img/online-education.png" alt="" height="50px">Code<span style="color: #2c68bc;">Era</span></p>
+        </a>
+    </nav>
+    <div class="container py-5">
+        <h2>Admin Dashboard</h2>
+        <div id="adminInfo"></div>
+        <hr>
+        <h4>All Users</h4>
+        <ul id="allUsersList" class="list-group"></ul>
+        <hr>
+        <h4>All Courses</h4>
+        <ul id="allAdminCourses" class="list-group"></ul>
+    </div>
+    <script>
+    async function loadAdminInfo() {
+        const res = await fetch('/api/profile');
+        if (res.ok) {
+            const data = await res.json();
+            const user = data.user;
+            if (user.role !== 'admin') {
+                document.body.innerHTML = '<div class="container py-5"><h3>Access Denied: Only admins can view this page.</h3></div>';
+                return;
+            }
+            document.getElementById('adminInfo').innerHTML = `<p><strong>Name:</strong> ${user.name}</p><p><strong>Email:</strong> ${user.email}</p>`;
+        } else {
+            window.location.href = '/login.html';
+        }
+    }
+    async function loadAllUsers() {
+        const res = await fetch('/api/all-users');
+        const list = document.getElementById('allUsersList');
+        list.innerHTML = '';
+        if (res.ok) {
+            const data = await res.json();
+            if (data.users.length === 0) {
+                list.innerHTML = '<li class="list-group-item">No users found.</li>';
+            } else {
+                data.users.forEach(user => {
+                    list.innerHTML += `<li class="list-group-item"><strong>${user.name}</strong> - ${user.email} (${user.role})</li>`;
+                });
+            }
+        } else {
+            list.innerHTML = '<li class="list-group-item">Unable to load users.</li>';
+        }
+    }
+    async function loadAllAdminCourses() {
+        const res = await fetch('/api/courses');
+        const list = document.getElementById('allAdminCourses');
+        list.innerHTML = '';
+        if (res.ok) {
+            const data = await res.json();
+            if (data.courses.length === 0) {
+                list.innerHTML = '<li class="list-group-item">No courses found.</li>';
+            } else {
+                data.courses.forEach(course => {
+                    list.innerHTML += `<li class="list-group-item"><strong>${course.title}</strong> - ${course.instructor}</li>`;
+                });
+            }
+        } else {
+            list.innerHTML = '<li class="list-group-item">Unable to load courses.</li>';
+        }
+    }
+    loadAdminInfo();
+    loadAllUsers();
+    loadAllAdminCourses();
+    </script>
+</body>
+</html>
