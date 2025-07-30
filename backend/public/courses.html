@@ -47,15 +47,41 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top" style="border-bottom:1px solid #e5e5e5;padding-top:0.25rem;padding-bottom:0.25rem;">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-3 gap-2">
-            <img src="img/online-education.png" alt="Logo" height="44" style="margin-right:8px;">
-            <span class="fw-bold" style="font-size: 25px;">Code<span style="color: #3789ed;">Era</span></span>
-        </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto d-flex align-items-center gap-2 pe-lg-3 pe-2">
+        <div class="container-fluid px-0 d-flex align-items-center" style="min-height:64px;">
+          <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-3 gap-2">
+              <img src="img/online-education.png" alt="Logo" height="44" style="margin-right:8px;">
+              <span class="fw-bold" style="font-size: 25px;">Code<span style="color: #3789ed;">Era</span></span>
+          </a>
+          <div class="navbar-collapse d-flex align-items-center" id="navbarCollapse" style="flex-grow:1;">
+            <div class="navbar-nav ms-auto d-flex align-items-center gap-2 pe-lg-3 pe-2" style="height:64px;">
+                <a href="index.html" class="nav-item nav-link active">Home</a>
+                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="courses.html" class="nav-item nav-link">Courses</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="team.html" class="dropdown-item">Our Team</a>
+                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                    </div>
+                </div>
+                <a href="contact.html" class="nav-item nav-link" style="font-size:16px;">Contact</a>
+                <!-- Profile Icon Dropdown as a group -->
+                <div class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle d-flex align-items-center gap-2 p-0" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="height:40px;width:auto;">
+                    <img src="img/profile-user.png" alt="Profile" style="width:26px;height:26px;border-radius:50%;object-fit:cover;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+                    <span class="d-none d-md-inline" style="font-size:16px;">Profile</span>
+                  </a>
+                  <div class="dropdown-menu fade-down m-0 dropdown-menu-end" aria-labelledby="profileDropdown" id="profileDropdownMenu">
+                    <a href="login.html" class="dropdown-item">Login</a>
+                    <a href="signup.html" class="dropdown-item">Sign Up</a>
+                  </div>
+                </div>
+                <a href="#" class="nav-item nav-link d-flex align-items-center justify-content-center p-0 ms-lg-2 ms-1" style="height:40px;width:40px;">
+                  <div id="google_translate_element"></div>
+                </a>
+            </div>
+          </div>
+        </div>
                 <a href="index.html" class="nav-item nav-link active">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="courses.html" class="nav-item nav-link">Courses</a>
@@ -203,14 +229,14 @@
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h6 class="section-title bg-white text-center px-3">Popular Courses</h6>
-                <h1 class="mb-5" style="color: ##2c68bc;">Explore new and trending free online courses</h1>
+                <h1 class="mb-5" style="color: #2c68bc;">Explore new and trending free online courses</h1>
             </div>
             <div class="row g-4 py-2">
                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="course-item shadow">
                         <div class="position-relative overflow-hidden text-light image">
                             <img class="img-fluid" src="img/course-1.jpg" alt="">
-                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:##2c68bc;"
+                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:#2c68bc;"
                                 class="px-2 py-1 fw-bold text-uppercase">FREE</div>
 
                         </div>
@@ -271,7 +297,7 @@
                     <div class="course-item shadow">
                         <div class="position-relative overflow-hidden text-light image">
                             <img class="img-fluid" src="img/course-3.jpg" alt="">
-                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:##2c68bc;"
+                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:#2c68bc;"
                                 class="px-2 py-1 fw-bold text-uppercase">FREE</div>
 
                         </div>
@@ -333,7 +359,7 @@
                     <div class="course-item shadow">
                         <div class="position-relative overflow-hidden text-light image">
                             <img class="img-fluid" src="img/course-5.jpg" alt="">
-                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:##2c68bc;"
+                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:#2c68bc;"
                                 class="px-2 py-1 fw-bold text-uppercase">FREE</div>
 
                         </div>
@@ -364,7 +390,7 @@
                     <div class="course-item shadow">
                         <div class="position-relative overflow-hidden text-light image">
                             <img class="img-fluid" src="img/course-6.jpg" alt="">
-                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:##2c68bc;"
+                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:#2c68bc;"
                                 class="px-2 py-1 fw-bold text-uppercase">FREE</div>
 
                         </div>
@@ -395,7 +421,7 @@
                     <div class="course-item shadow">
                         <div class="position-relative overflow-hidden text-light image">
                             <img class="img-fluid" src="img/course-7.jpg" alt="">
-                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:##2c68bc;"
+                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:#2c68bc;"
                                 class="px-2 py-1 fw-bold text-uppercase">FREE</div>
 
                         </div>
@@ -457,7 +483,7 @@
                     <div class="course-item shadow">
                         <div class="position-relative overflow-hidden text-light image">
                             <img class="img-fluid" src="img/course-9.jpg" alt="">
-                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:##2c68bc;"
+                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:#2c68bc;"
                                 class="px-2 py-1 fw-bold text-uppercase">FREE</div>
 
                         </div>
@@ -520,7 +546,7 @@
                     <div class="course-item shadow">
                         <div class="position-relative overflow-hidden text-light image">
                             <img class="img-fluid" src="img/course-11.jpg" alt="">
-                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:##2c68bc;"
+                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:#2c68bc;"
                                 class="px-2 py-1 fw-bold text-uppercase">FREE</div>
 
                         </div>
@@ -551,7 +577,7 @@
                     <div class="course-item shadow">
                         <div class="position-relative overflow-hidden text-light image">
                             <img class="img-fluid" src="img/course-12.png" alt="">
-                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:##2c68bc;"
+                            <div style="position:absolute;top: 15px;left: 16px; font-size:12px; border-radius:3px; background-color:#2c68bc;"
                                 class="px-2 py-1 fw-bold text-uppercase">FREE</div>
 
                         </div>
