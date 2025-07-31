@@ -1,22 +1,3 @@
-// === Change Password ===
-app.put('/api/profile/password', async (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-  const { currentPassword, newPassword } = req.body;
-  if (!currentPassword || !newPassword) {
-    return res.status(400).json({ message: 'Both fields are required.' });
-  }
-  const user = await User.findById(req.session.userId);
-  const isMatch = await bcrypt.compare(currentPassword, user.password);
-  if (!isMatch) {
-    return res.status(400).json({ message: 'Current password is incorrect.' });
-  }
-  user.password = await bcrypt.hash(newPassword, 10);
-  await user.save();
-  res.json({ message: 'Password changed successfully.' });
-});
-// ...existing code...
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -121,6 +102,25 @@ app.put('/api/profile', async (req, res) => {
     { new: true }
   ).select('-password');
   res.json({ message: 'Profile updated', user });
+});
+
+// === Change Password ===
+app.put('/api/profile/password', async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+  const { currentPassword, newPassword } = req.body;
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ message: 'Both fields are required.' });
+  }
+  const user = await User.findById(req.session.userId);
+  const isMatch = await bcrypt.compare(currentPassword, user.password);
+  if (!isMatch) {
+    return res.status(400).json({ message: 'Current password is incorrect.' });
+  }
+  user.password = await bcrypt.hash(newPassword, 10);
+  await user.save();
+  res.json({ message: 'Password changed successfully.' });
 });
 
 // === Get user's enrolled courses ===
