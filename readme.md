@@ -58,7 +58,7 @@ Before you begin, ensure you have the following prerequisites:
 
 - API Format: RESTful
 
-- Test Tool: Postman (or connect with your frontend later)
+- Test Tool: Postman(or connect with your frontend later)
 
 
 
