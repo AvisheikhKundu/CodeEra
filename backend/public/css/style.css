@@ -131,6 +131,10 @@
     color: var(--primary);
 }
 
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
 @media (max-width: 991.98px) {
     .navbar-light .navbar-nav .nav-link {
         margin-right: 0;
@@ -139,6 +143,48 @@
 
     .navbar-light .navbar-nav {
         border-top: 1px solid #EEEEEE;
+    }
+
+    .navbar-collapse {
+        flex-grow: 0;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-nav .nav-item {
+        width: 100%;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 10px 15px;
+    }
+
+    .navbar-nav .dropdown-menu {
+        position: static;
+        float: none;
+        width: 100%;
+        margin-top: 0;
+        background-color: transparent;
+        border: 0;
+        box-shadow: none;
+    }
+
+    .navbar-nav .dropdown-item {
+        padding-left: 30px;
+    }
+
+    .navbar-nav .dropdown-toggle::after {
+        display: none;
+    }
+
+    #profileDropdownMenu {
+        position: absolute !important;
+        left: auto !important;
+        right: 0 !important;
+        top: 100% !important;
     }
 }
 
@@ -157,11 +203,11 @@
     transition: .5s;
 }
 
-.navbar-toggler-icon {
+.navbar-toggler-icon{
     color: #2c68bc;
 }
 
-.navbar-toggler {
+.navbar-toggler{
     border: 2px solid #2c68bc;
 }
 
@@ -189,6 +235,7 @@
     }
 }
 
+
 /*** Header carousel ***/
 
 .header-carousel .owl-carousel-item {
@@ -196,7 +243,7 @@
     height: 100vh;
 }
 
-.header-carousel p {
+.header-carousel p{
     margin-top: 20px;
     font-size: 20px;
     line-height: 30px;
@@ -244,15 +291,28 @@
         object-fit: cover;
     }
 
-    .header-carousel h1 {
+    .header-carousel h1{
         font-size: 30px;
         line-height: 30px;
     }
 
-    .header-carousel p {
+    .header-carousel p{
         margin-top: 20px;
         font-size: 15px;
         line-height: 20px;
+    }
+}
+
+@media (max-width: 330px) {
+    .header-carousel h1{
+        font-size: 20px;
+        line-height: 20px;
+    }
+
+    .header-carousel p{
+        margin-top: 10px;
+        font-size: 12px;
+        line-height: 15px;
     }
 }
 
