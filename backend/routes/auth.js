@@ -25,9 +25,11 @@ router.post('/login', async (req, res) => {
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     const isMatch = await user.comparePassword(password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid password' });
+    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
-    res.json({ message: 'Login successful', user: { username: user.username, email: user.email } });
+    req.session.userId = user._id; 
+
+    res.json({ message: 'Login successful', user: { username: user.username, email: user.email, role: user.role } });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

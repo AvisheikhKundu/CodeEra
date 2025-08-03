@@ -1,6 +1,8 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const path = require('path');
@@ -32,47 +34,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // === Connect to MongoDB ===
 mongoose
-  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect("mongodb+srv://codeera:Avisheikh01@cluster1.3lninsf.mongodb.net/CodeEra?retryWrites=true&w=majority&appName=Cluster1", { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('✅ MongoDB connected'))
   .catch((err) => console.error('❌ MongoDB error:', err));
 
-// === Signup Route ===
-app.post('/api/auth/signup', async (req, res) => {
-  try {
-    const { name, email, password, role } = req.body;
-    if (!name || !email || !password || !role) {
-      return res.status(400).json({ message: 'All fields are required.' });
-    }
-    const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: 'User already exists' });
-    const newUser = new User({ name, email, password, role }); // Let model hash password
-    await newUser.save();
-    req.session.userId = newUser._id;
-    res.status(201).json({ message: 'User registered successfully', user: { name: newUser.name, email: newUser.email, role: newUser.role } });
-  } catch (err) {
-    console.error('Signup error:', err);
-    res.status(500).json({ message: 'Server error during signup' });
-  }
-});
+const authRoutes = require('./routes/auth');
 
-// === Login Route ===
-app.post('/api/auth/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      return res.status(400).json({ message: 'All fields are required.' });
-    }
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'Invalid credentials' });
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
-    req.session.userId = user._id;
-    res.status(200).json({ message: 'Login successful', user: { name: user.name, email: user.email, role: user.role } });
-  } catch (err) {
-    console.error('Login error:', err);
-    res.status(500).json({ message: 'Server error during login' });
-  }
-});
+// === Routes ===
+app.use('/api/auth', authRoutes);
 
 // === Logout Route ===
 app.post('/api/logout', (req, res) => {
@@ -131,6 +100,24 @@ app.get('/api/my-courses', async (req, res) => {
   res.json({ courses: user.enrolledCourses });
 });
 
+// === Get all users (Admin only) ===
+app.get('/api/all-users', async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+  try {
+    const adminUser = await User.findById(req.session.userId);
+    if (!adminUser || adminUser.role !== 'admin') {
+      return res.status(403).json({ message: 'Forbidden: Admins only' });
+    }
+    const users = await User.find().select('-password');
+    res.json({ users });
+  } catch (err) {
+    console.error('Error fetching all users:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // === List all courses ===
 app.get('/api/courses', async (req, res) => {
   const courses = await Course.find();
@@ -182,20 +169,68 @@ app.delete('/api/courses/:id', async (req, res) => {
 });
 
 // === Enroll in a course ===
+// === Enroll in a course ===
 app.post('/api/courses/:id/enroll', async (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ error: 'Unauthorized' });
+  }
+  const user = await User.findById(req.session.userId);
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
   }
   const course = await Course.findById(req.params.id);
   if (!course) {
     return res.status(404).json({ error: 'Course not found' });
   }
-  if (!course.enrolledUsers.includes(req.session.userId)) {
-    course.enrolledUsers.push(req.session.userId);
+  // Only students can enroll
+  if (user.role !== 'student') {
+    return res.status(403).json({ error: 'Only students can enroll in courses.' });
+  }
+  // Add course to user's enrolledCourses if not already enrolled
+  if (!user.enrolledCourses.includes(course._id)) {
+    user.enrolledCourses.push(course._id);
+    await user.save();
+  }
+  // Add user to course's enrolledUsers if not already enrolled
+  if (!course.enrolledUsers) course.enrolledUsers = [];
+  if (!course.enrolledUsers.includes(user._id)) {
+    course.enrolledUsers.push(user._id);
     await course.save();
   }
-  await User.findByIdAndUpdate(req.session.userId, { $addToSet: { enrolledCourses: course._id } });
   res.json({ message: 'Enrolled successfully' });
+});
+
+// === Drop a course ===
+app.post('/api/courses/:id/drop', async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  const user = await User.findById(req.session.userId);
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+  const course = await Course.findById(req.params.id);
+  if (!course) {
+    return res.status(404).json({ error: 'Course not found' });
+  }
+
+  // Remove course from user's enrolledCourses
+  const courseIndex = user.enrolledCourses.indexOf(course._id);
+  if (courseIndex > -1) {
+    user.enrolledCourses.splice(courseIndex, 1);
+    await user.save();
+  }
+
+  // Remove user from course's enrolledUsers
+  if (course.enrolledUsers) {
+    const userIndex = course.enrolledUsers.indexOf(user._id);
+    if (userIndex > -1) {
+      course.enrolledUsers.splice(userIndex, 1);
+      await course.save();
+    }
+  }
+
+  res.json({ message: 'Dropped course successfully' });
 });
 
 // === Fallback to index.html for frontend routes ===

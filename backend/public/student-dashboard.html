@@ -52,7 +52,17 @@
                 list.innerHTML = '<li class="list-group-item">No courses available.</li>';
             } else {
                 data.courses.forEach(course => {
-                    list.innerHTML += `<li class="list-group-item"><strong>${course.title}</strong> - ${course.instructor} <button class='btn btn-sm btn-success float-end' onclick='enrollCourse("${course._id}")'>Enroll</button></li>`;
+                    list.innerHTML += `<li class="list-group-item">
+                        <div class="d-flex">
+                            <img src="${course.image || 'img/course-1.jpg'}" alt="${course.title}" style="width: 120px; height: 80px; object-fit: cover; margin-right: 15px;">
+                            <div>
+                                <h5>${course.title}</h5>
+                                <p class="mb-1">${course.instructor}</p>
+                                <p class="mb-2">${course.description || ''}</p>
+                                <button class='btn btn-sm btn-success' onclick='enrollCourse("${course._id}")'>Enroll</button>
+                            </div>
+                        </div>
+                    </li>`;
                 });
             }
         } else {
@@ -78,11 +88,31 @@
                 list.innerHTML = '<li class="list-group-item">No enrolled courses.</li>';
             } else {
                 data.courses.forEach(course => {
-                    list.innerHTML += `<li class="list-group-item"><strong>${course.title}</strong> - ${course.instructor}</li>`;
+                    list.innerHTML += `<li class="list-group-item">
+                        <div class="d-flex">
+                            <img src="${course.image || 'img/course-1.jpg'}" alt="${course.title}" style="width: 120px; height: 80px; object-fit: cover; margin-right: 15px;">
+                            <div>
+                                <h5>${course.title}</h5>
+                                <p class="mb-1">${course.instructor}</p>
+                                <p class="mb-2">${course.description || ''}</p>
+                                <button class='btn btn-sm btn-danger' onclick='dropCourse("${course._id}")'>Drop</button>
+                            </div>
+                        </div>
+                    </li>`;
                 });
             }
         } else {
             list.innerHTML = '<li class="list-group-item">Unable to load courses.</li>';
+        }
+    }
+
+    async function dropCourse(courseId) {
+        const res = await fetch(`/api/courses/${courseId}/drop`, { method: 'POST' });
+        if (res.ok) {
+            alert('Dropped course successfully!');
+            loadMyStudentCourses();
+        } else {
+            alert('Failed to drop course.');
         }
     }
     loadStudentInfo();
