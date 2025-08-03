@@ -45,8 +45,7 @@ app.post('/api/auth/signup', async (req, res) => {
     }
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(400).json({ message: 'User already exists' });
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, password: hashedPassword, role });
+    const newUser = new User({ name, email, password, role }); // Let model hash password
     await newUser.save();
     req.session.userId = newUser._id;
     res.status(201).json({ message: 'User registered successfully', user: { name: newUser.name, email: newUser.email, role: newUser.role } });
