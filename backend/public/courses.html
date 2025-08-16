@@ -68,14 +68,23 @@
                     </div>
                 </div>
                 <a href="contact.html" class="nav-item nav-link" style="font-size:16px;">Contact</a>
-                <!-- Profile Icon Dropdown -->
-                <div class="nav-item dropdown d-flex align-items-center ms-lg-3 ms-2">
-                  <a href="#" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center p-0" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="height:40px;width:40px;">
-                    <img src="img/profile-user.png" alt="Profile" style="width:26px;height:26px;border-radius:50%;object-fit:cover;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
-                  </a>
-                  <div class="dropdown-menu fade-down m-0 dropdown-menu-end" aria-labelledby="profileDropdown" id="profileDropdownMenu">
-                    <a href="login.html" class="dropdown-item">Login</a>
-                    <a href="signup.html" class="dropdown-item">Sign Up</a>
+                <!-- Single Profile Icon Section -->
+                <div class="nav-item d-flex align-items-center ms-lg-3 ms-2">
+                  <!-- Profile Dropdown for logged-out users -->
+                  <div class="dropdown" id="profileDropdownContainer">
+                    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center p-0" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="height:40px;width:40px;">
+                      <img src="img/profile-user.png" alt="Profile" style="width:26px;height:26px;border-radius:50%;object-fit:cover;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+                    </a>
+                    <div class="dropdown-menu fade-down m-0 dropdown-menu-end" aria-labelledby="profileDropdown">
+                      <a href="login.html" class="dropdown-item">Login</a>
+                      <a href="signup.html" class="dropdown-item">Sign Up</a>
+                    </div>
+                  </div>
+                  <!-- Direct Profile Link for logged-in users -->
+                  <div id="profileDirectLink" style="display: none;">
+                    <a href="profile.html" class="nav-link d-flex align-items-center justify-content-center p-0" style="height:40px;width:40px;" title="My Profile">
+                      <img src="img/profile-user.png" alt="Profile" style="width:26px;height:26px;border-radius:50%;object-fit:cover;box-shadow:0 1px 4px rgba(0,0,0,0.08);">
+                    </a>
                   </div>
                 </div>
                 <a href="#" class="nav-item nav-link d-flex align-items-center justify-content-center p-0 ms-lg-2 ms-1" style="height:40px;width:40px;">
@@ -657,6 +666,7 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="js/profile-state.js"></script>
 </body>
 
 </html>
