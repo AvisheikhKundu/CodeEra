@@ -1,3 +1,35 @@
+.header-carousel .owl-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    position: absolute;
+    top: 50%;
+    right: 3%;
+    transform: translateY(-50%);
+    gap: 10px;
+    z-index: 10;
+}
+
+.header-carousel .owl-nav .owl-prev,
+.header-carousel .owl-nav .owl-next {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    color: #fff;
+    background: transparent;
+    border: 1px solid #fff;
+    font-size: 22px;
+    transition: .5s;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.header-carousel .owl-nav .owl-prev:hover,
+.header-carousel .owl-nav .owl-next:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+}
 /********** Template CSS **********/
 :root {
     --primary: #2c68bc;
@@ -319,10 +351,12 @@
 .header-carousel .owl-nav {
     position: absolute;
     top: 50%;
-    right: 8%;
+    right: 3%;
     transform: translateY(-50%);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    gap: 10px;
+    z-index: 10;
 }
 
 .header-carousel .owl-nav .owl-prev,
