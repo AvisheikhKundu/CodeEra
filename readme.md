@@ -1,8 +1,4 @@
-## License & Usage
 
-This project is protected by copyright. Unauthorized copying, use, modification, or distribution of any part of this code is strictly prohibited without express written permission from the copyright holder.
-
-See the LICENSE file for full details. If you wish to use any part of this project, please contact the author for permission.
 ## CodeEra is a Bangladeshi E-Learning Platform
 <img width="1897" height="1027" alt="Home Page of CodeEra" src="https://github.com/user-attachments/assets/55f5aa0c-ac76-4499-8f68-7f0d537fd508" />
 
@@ -63,6 +59,11 @@ Before you begin, ensure you have the following prerequisites:
 
 - Test Tool: Postman(or connect with  frontend later)
 
+## License & Usage
+
+This project is protected by copyright. Unauthorized copying, use, modification, or distribution of any part of this code is strictly prohibited without express written permission from the copyright holder.
+
+See the LICENSE file for full details. If you wish to use any part of this project, please contact the author for permission.
 
 
 
