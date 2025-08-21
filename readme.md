@@ -1,3 +1,8 @@
+## License & Usage
+
+This project is protected by copyright. Unauthorized copying, use, modification, or distribution of any part of this code is strictly prohibited without express written permission from the copyright holder.
+
+See the LICENSE file for full details. If you wish to use any part of this project, please contact the author for permission.
 ## CodeEra is a Bangladeshi E-Learning Platform
 <img width="1919" height="1029" alt="HomeNew" src="https://github.com/user-attachments/assets/3ce62729-85af-44f6-8170-9ee04649e439" />
 
