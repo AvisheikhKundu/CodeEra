@@ -363,9 +363,8 @@ The development of CodeEra demonstrates proficiency in:
 - API design and RESTful service architecture
 - Version control and project management
 
-This project serves as a comprehensive showcase of modern web development practices while addressing real-world educational challenges in the Bangladeshi context.
-
 ---
+
 
 **Project Developer**: Avisheikh Kundu  
 **Repository**: [GitHub - CodeEra](https://github.com/AvisheikhKundu/CodeEra)  
