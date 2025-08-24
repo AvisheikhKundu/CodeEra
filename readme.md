@@ -10,7 +10,7 @@ CodeEra is a modern e-learning web platform built to empower Computer Science & 
 
 ## Features
 
-- Responsive design.
+- Fully Responsive.
 - Structured course catalog with detailed descriptions.
 - Interactive lessons.
 - User can register and Login.
